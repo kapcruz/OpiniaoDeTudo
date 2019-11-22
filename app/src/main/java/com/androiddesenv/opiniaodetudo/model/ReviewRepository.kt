@@ -12,4 +12,8 @@ class ReviewRepository{
     fun save(name: String, review: String) {
         data.add(Review(UUID.randomUUID().toString(), name, review));
     }
+
+    fun listAll(): List<Review>{
+        return data.toList()
+    }
 }
