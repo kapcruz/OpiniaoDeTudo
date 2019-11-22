@@ -4,4 +4,7 @@
     <string name="form_review_name">Nome</string>
     <string name="form_review_opinion">Opinião</string>
     <string name="form_button">Gravar</string>
+
+    <string name="menu_list_reviews">Escreva uma opinião</string>
+    <string name="menu_list_reviews_label">Escreva uma opinião</string>
 </resources>
