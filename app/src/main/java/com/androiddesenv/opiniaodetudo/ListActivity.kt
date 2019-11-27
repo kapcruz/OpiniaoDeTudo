@@ -1,17 +1,17 @@
 package com.androiddesenv.opiniaodetudo
 
+import android.content.Context
+import android.os.PersistableBundle
+import android.view.LayoutInflater
+import android.content.Intent
 import android.os.AsyncTask
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.PopupMenu
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.androiddesenv.opiniaodetudo.model.Review
 import com.androiddesenv.opiniaodetudo.model.repository.ReviewRepository
-
 
 class ListActivity : AppCompatActivity() {
 
@@ -26,6 +26,20 @@ class ListActivity : AppCompatActivity() {
         val listView = findViewById<ListView>(R.id.list_recyclerview)
         initList(listView)
         configureOnLongClick(listView)
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        object : AsyncTask<Unit, Void, Unit>() {
+            override fun doInBackground(vararg params: Unit?) {
+                this@ListActivity.reviews = ReviewRepository(this@ListActivity.applicationContext).listAll().toMutableList()
+            }
+            override fun onPostExecute(result: Unit?) {
+                val listView = findViewById<ListView>(R.id.list_recyclerview)
+                val adapter = listView.adapter as ArrayAdapter<Review>
+                adapter.notifyDataSetChanged()
+            }
+        }.execute()
     }
 
     private fun initList(listView: ListView){
@@ -65,6 +79,7 @@ class ListActivity : AppCompatActivity() {
             popupMenu.setOnMenuItemClickListener {
                 when(it.itemId){
                     R.id.item_list_delete -> this@ListActivity.delete(reviews[position])
+                    R.id.item_list_edit -> this@ListActivity.openItemForEdition(reviews[position])
                 }
                 true
             }
@@ -86,6 +101,12 @@ class ListActivity : AppCompatActivity() {
             }
         }.execute()
 
+    }
+
+    private fun openItemForEdition(item: Review) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("item", item)
+        startActivity(intent)
     }
 
     override fun onSupportNavigateUp(): Boolean {
