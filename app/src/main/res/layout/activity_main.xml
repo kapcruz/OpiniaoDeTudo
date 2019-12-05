@@ -7,8 +7,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+    <!--<ScrollView android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <!--</ScrollView>-->
+    <LinearLayout
+        android:id="@+id/bottom_main_menu_container"
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_main_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundBottom"
+            app:menu="@menu/bottom_menu"/>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
